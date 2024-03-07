@@ -49,27 +49,28 @@ def create_service(request):
     return render(request, 'dashboard/service/create.html')
 
 
+def list_service(request):
+    services = models.Service.objects.all()
+    context = {
+        'services':services
+    }
+    return render(request, 'dashboard/service/list.html', context)
+
+
+def create_price(request):
+    if request.method == "POST":
+        title = request.POST['title']
+        price = request.POST['price']
+        body = request.POST['body']
+        models.Price.objects.create(
+            title=title,
+            price=price,
+            body=body
+        )
+    return render(request, 'dashboard/price/create.html')
+
+
 def list_price(request):
-    price = models.Service.objects.all()
-    context = {
-        'price':price
-    }
-    return render(request, 'dashboard/price/list.html', context)
-
-def create_price(request):
-    if request.method == "POST":
-        title = request.POST['title']
-        price = request.POST['price']
-        body = request.POST['body']
-        models.Price.objects.create(
-            title=title,
-            price=price,
-            body=body
-        )
-    return render(request, 'dashboard/price/create.html')
-
-
-def list_service(request):
     price = models.Price.objects.all()
     context = {
         'price':price
@@ -90,12 +91,20 @@ def create_price(request):
     return render(request, 'dashboard/price/create.html')
 
 
-def list_service(request):
+def list_price(request):
     price = models.Price.objects.all()
+
+    prices_list = []
+
+    for price in models.Price.objects.all().order_by('price'):
+        price.body = price.body.split(',')
+        prices_list.append(price)
+
     context = {
-        'price':price
+        'prices':prices_list
     }
     return render(request, 'dashboard/price/list.html', context)
+
 
 def create_about_us(request):
     if request.method == "POST":
@@ -112,3 +121,25 @@ def list_about_us(request):
         'about_us':about_us
     }
     return render(request, 'dashboard/about_us/list.html', context)
+
+def create_contact(request):
+    if request.method == "POST":
+        name = request.POST['name']
+        email = request.POST['email']
+        phone = request.POST['phone']
+        body = request.POST['body']
+        models.Contact.objects.create(
+            name=name,
+            email=email,
+            phone=phone,
+            body=body
+        )
+    return render(request, 'dashboard/contact/create.html')
+
+
+def list_contact(request):   
+    contact = models.Contact.objects.all()
+    context = {
+        'contact':contact
+    }
+    return render(request, 'dashboard/contact/list.html', context)

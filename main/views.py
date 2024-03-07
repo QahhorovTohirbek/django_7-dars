@@ -35,22 +35,26 @@ def contact(request):
     return render(request, 'front/contact.html')
 
 def service(request):
-    baner = models.Banner.objects.last()
-    about_us = models.AboutUs.objects.last()
     services = models.Service.objects.all()
 
-    prices_list = []
+    context = {
+        'services':services,    }
+    return render(request, 'front/service.html', context)
 
-    for price in models.Price.objects.all().order_by('price'):
-        price.body = price.body.split(',')
-        prices_list.append(price)
+def about_us(request):
+    about_us = models.AboutUs.objects.last()
 
     context = {
-        'baner':baner,
         'about_us':about_us,
-        'services':services,
-        'prices':prices_list
     }
-    return render(request, 'front/service.html', context)
+    return render(request, 'front/about.html', context)
+
+def price(request):
+    prices=models.Price.objects.all().order_by('price')
+
+    context = {
+        'prices':prices,
+    }
+    return render(request, 'front/price.html', context)
 
 
