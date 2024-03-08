@@ -246,52 +246,60 @@
                                             </a>
                                         </form>
                                     </div>
-                                    <h4 class="page-title">Dashboard</h4>
+                                    <div class="d-flex justify-content-around align-items-center">
+                                        <h4 class="page-title" style="display: inline;">Dashboard</h4>
+                                        <a href="{% url 'about_us-edit' about_us.id %}" class="btn btn-primary">O`zgartirish</a>
+                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#centermodal">O`chirish</button>
+                                        <div class="modal fade" id="centermodal" tabindex="-1" role="dialog" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title" id="myCenterModalLabel">Bannerni o`chirmoqchimisiz? </h4>
+                                                        <form method="get" action="{% url 'about_us-delete' about_us.id %}">
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <input type="checkbox" class="form-check-input" id="customCheckcolor7" required>
+                                                            <label for="chkb">Ha</label> <br> <br>
+                                                            <button type="button" class="btn btn-dark" data-bs-dismiss="modal" aria-hidden="true">Qaytish</button>
+                                                            <button class="btn btn-danger" type="submit">O`chirish</button>
+                                                        </div>
+                                                        </form>
+                                                </div><!-- /.modal-content -->
+                                            </div><!-- /.modal-dialog -->
+                                        </div><!-- /.modal -->
+
+                                                
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <!-- end row -->
                         <div class="row">
                             <div class="col-2"></div>
-                            <div class="col-xl-6">
-                                <div class="card">
-                                    <div class="card-body">
-
-                                        <h4 class="header-title">Narxlar ro`yxati</h4>
-                                        <div class="tab-content">
-                                            <div class="tab-pane show active" id="striped-rows-preview" role="tabpanel">
-                                                <div class="table-responsive-sm">
-                                                    <table class="table table-striped table-centered mb-0">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>#</th>
-                                                                <th>Sarlavha</th>
-                                                                <th>Narxi</th>
-                                                                <th>Tana Qism</th>
-                                                                <th>Harakatlar</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            {% for price in prices %}
-                                                            <tr>
-                                                                <td>{{forloop.counter}}</td>
-                                                                <td>{{price.title}}</td>
-                                                                <td>{{price.price}}</td>
-                                                                <td>{{price.body}}</td>
-                                                                <td class="table-action">
-                                                                    <a href="{% url 'price-detail' price.id %}" class="action-icon"> <i class=" ri-share-forward-2-line"></i></a>
-                                                                </td>
-                                                            </tr>
-                                                            {% endfor %}
-                                                        </tbody>
-                                                    </table>
-                                                </div> <!-- end table-responsive-->                     
-                                            </div> <!-- end preview-->
-                                         </div> <!-- end tab-content-->
-
-                                    </div> <!-- end card body-->
-                                </div> <!-- end card -->
-                            </div>
+                            <div class="col-8">
+                                 <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="header-title mb-3">Biz haqimizda batafsil</h4>
+                
+                                            <div class="table-responsive">
+                                                <table class="table mb-0">
+                                                    <thead class="table-light">
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <td><strong>Batafil</strong> :</td>
+                                                        <td>{{about_us.body}}</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <!-- end table-responsive -->
+                
+                                        </div>
+                                    </div>
+                                </div> <!-- end card-->
+                            </div> <!-- end col -->
                         </div>
                     </div>
                     <!-- container -->
@@ -913,7 +921,7 @@
                                     </div>
                                     <h5 class="font-14 text-center text-muted mt-2">Condensed</h5>
                                 </div>
-
+                                
                                 <div class="col-4">
                                     <div class="form-check sidebar-setting card-radio">
                                         <input class="form-check-input" type="radio" name="data-sidenav-size" id="leftbar-size-small-hover" value="sm-hover">
@@ -1013,6 +1021,38 @@
                     </div>
                 </div>
             </div>
+            <div id="bottom-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-sm modal-bottom">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="bottomModalLabel">Modal Heading</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                        </div>
+                        <div class="modal-body">
+                            ...
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+            
+                                                            
+            <div class="modal fade" id="centermodal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myCenterModalLabel">Center modal</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                        </div>
+                        <div class="modal-body">
+                            ...
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
         </div>        
         
         <!-- Vendor js -->

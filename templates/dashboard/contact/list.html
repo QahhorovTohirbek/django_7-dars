@@ -257,7 +257,7 @@
                                 <div class="card">
                                     <div class="card-body">
 
-                                        <h4 class="header-title">Narxlar ro`yxati</h4>
+                                        <h4 class="header-title">Kontaktlar ro`yxati</h4>
                                         <div class="tab-content">
                                             <div class="tab-pane show active" id="striped-rows-preview" role="tabpanel">
                                                 <div class="table-responsive-sm">
@@ -265,21 +265,21 @@
                                                         <thead>
                                                             <tr>
                                                                 <th>#</th>
-                                                                <th>Sarlavha</th>
-                                                                <th>Narxi</th>
-                                                                <th>Tana Qism</th>
+                                                                <th>Ismi</th>
+                                                                <th>Emaili</th>
+                                                                <th>Telefon raqami</th>
                                                                 <th>Harakatlar</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            {% for price in prices %}
+                                                            {% for contact in contacts %}
                                                             <tr>
                                                                 <td>{{forloop.counter}}</td>
-                                                                <td>{{price.title}}</td>
-                                                                <td>{{price.price}}</td>
-                                                                <td>{{price.body}}</td>
+                                                                <td>{{contact.name}}</td>
+                                                                <td>{{contact.email}}</td>
+                                                                <td>{{contact.phone}}</td>
                                                                 <td class="table-action">
-                                                                    <a href="{% url 'price-detail' price.id %}" class="action-icon"> <i class=" ri-share-forward-2-line"></i></a>
+                                                                    <a href="{% url 'contact-detail' contact.id %}" class="action-icon"> <i class=" ri-share-forward-2-line"></i></a>
                                                                 </td>
                                                             </tr>
                                                             {% endfor %}

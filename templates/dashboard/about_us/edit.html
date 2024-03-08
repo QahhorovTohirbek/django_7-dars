@@ -253,45 +253,41 @@
                         <!-- end row -->
                         <div class="row">
                             <div class="col-2"></div>
-                            <div class="col-xl-6">
+                            <div class="col-8">
                                 <div class="card">
                                     <div class="card-body">
-
-                                        <h4 class="header-title">Narxlar ro`yxati</h4>
+                                        <h4 class="header-title">Banner yaratish</h4>
+                                        <p class="text-muted font-14"> Web saytning yuqori qismi
+                                        </p>
                                         <div class="tab-content">
-                                            <div class="tab-pane show active" id="striped-rows-preview" role="tabpanel">
-                                                <div class="table-responsive-sm">
-                                                    <table class="table table-striped table-centered mb-0">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>#</th>
-                                                                <th>Sarlavha</th>
-                                                                <th>Narxi</th>
-                                                                <th>Tana Qism</th>
-                                                                <th>Harakatlar</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            {% for price in prices %}
-                                                            <tr>
-                                                                <td>{{forloop.counter}}</td>
-                                                                <td>{{price.title}}</td>
-                                                                <td>{{price.price}}</td>
-                                                                <td>{{price.body}}</td>
-                                                                <td class="table-action">
-                                                                    <a href="{% url 'price-detail' price.id %}" class="action-icon"> <i class=" ri-share-forward-2-line"></i></a>
-                                                                </td>
-                                                            </tr>
-                                                            {% endfor %}
-                                                        </tbody>
-                                                    </table>
-                                                </div> <!-- end table-responsive-->                     
+                                            <div class="tab-pane show active" id="typeahead-preview" role="tabpanel">
+                                                <div class="row">
+                                                    <form method="post">
+                                                        {% csrf_token %}
+                                                        <div class="col-lg-12">
+                                                            <div class="mb-3">
+                                                                <label class="form-label">Tana qism</label>
+                                                                <span class="twitter-typeahead" style="position: relative; display: inline-block;">
+                                                                    <textarea name="body" class="form-control tt-hint" cols="30" rows="10">{{about_us.body}}</textarea>
+                                                                    <pre aria-hidden="true" style="position: absolute; visibility: hidden; white-space: pre; font-family: Nunito, sans-serif; font-size: 14.4px; font-style: normal; font-variant: normal; font-weight: 400; word-spacing: 0px; letter-spacing: 0px; text-indent: 0px; text-rendering: auto; text-transform: none;"></pre><div class="tt-menu" style="position: absolute; top: 100%; left: 0px; z-index: 100; display: none;"><div class="tt-dataset tt-dataset-states"></div></div></span>
+                                                            </div>
+                                                        </div> <!-- end col -->
+                                                        </div> <!-- end col -->
+                                                        <div class="col">
+                                                            <button type="submit" class="btn btn-success rounded-pill">Success</button>
+                                                        </div>
+                                                        
+                                                    </form>
+                                                    </div>
+                                                <!-- end row -->
+        
+                                                <!-- end row -->                      
                                             </div> <!-- end preview-->
-                                         </div> <!-- end tab-content-->
+                                        </div> <!-- end tab-content-->
 
-                                    </div> <!-- end card body-->
-                                </div> <!-- end card -->
-                            </div>
+                                    </div> <!-- end card-body -->
+                                </div> <!-- end card-->
+                            </div> <!-- end col -->
                         </div>
                     </div>
                     <!-- container -->
