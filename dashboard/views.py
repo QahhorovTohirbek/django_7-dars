@@ -1,6 +1,11 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from main import models
 
+
+@login_required(login_url='dashboard:log_in')
 def index(request):
     contacts = models.Contact.objects.filter(is_show=False).count()
 
@@ -18,6 +23,7 @@ def index(request):
 # Delte
 
 """ Banner section """
+@login_required(login_url='dashboard:log_in')
 def create_banner(request):
     if request.method == "POST":
         title = request.POST['title']
@@ -29,6 +35,7 @@ def create_banner(request):
     return render(request, 'dashboard/banner/create.html')
 
 
+@login_required(login_url='dashboard:log_in')
 def list_banner(request):
     banners = models.Banner.objects.all()
     context = {
@@ -44,13 +51,14 @@ def detail_banner(request, id):
     return render(request, 'dashboard/banner/detail.html', context)
 
 
+@login_required(login_url='dashboard:log_in')
 def edit_banner(request, id):
     banner = models.Banner.objects.get(id=id)
     if request.method =='POST':
         banner.title = request.POST['title']
         banner.body = request.POST['body']
         banner.save()
-        return redirect('banner-detail', banner.id)
+        return redirect('dashboard:banner-detail', banner.id)
     context = {
         'banner':banner
     }
@@ -63,6 +71,7 @@ def delete_banner(request, id):
 
 
 """ Service section """
+@login_required(login_url='dashboard:log_in')
 def create_service(request):
     if request.method == "POST":
         name = request.POST['name']
@@ -76,6 +85,7 @@ def create_service(request):
     return render(request, 'dashboard/service/create.html')
 
 
+@login_required(login_url='dashboard:log_in')
 def list_service(request):
     services = models.Service.objects.all()
     context = {
@@ -83,6 +93,8 @@ def list_service(request):
     }
     return render(request, 'dashboard/service/list.html', context)
 
+
+@login_required(login_url='dashboard:log_in')
 def detail_service(request, id):
     service = models.Service.objects.get(id=id)
     context = {
@@ -91,6 +103,7 @@ def detail_service(request, id):
     return render(request, 'dashboard/service/detail.html', context)
 
 
+@login_required(login_url='dashboard:log_in')
 def edit_service(request, id):
     service = models.Service.objects.get(id=id)
     if request.method =='POST':
@@ -98,18 +111,21 @@ def edit_service(request, id):
         service.body = request.POST['body']
         service.icon = request.POST['icon']
         service.save()
-        return redirect('list-service', service.id)
+        return redirect('dashboard:service-list', service.id)
     context = {
         'service':service
     }
     return render(request, 'dashboard/service/edit.html', context)
 
+
+@login_required(login_url='dashboard:log_in')
 def delete_service(request, id):
     models.Service.objects.get(id=id).delete()
-    return redirect('list-service')
+    return redirect('dashboard:service-list')
 
 
 """ Price section """
+@login_required(login_url='dashboard:log_in')
 def create_price(request):
     if request.method == "POST":
         title = request.POST['title']
@@ -123,6 +139,7 @@ def create_price(request):
     return render(request, 'dashboard/price/create.html')
 
 
+@login_required(login_url='dashboard:log_in')
 def list_price(request):
     prices = models.Price.objects.all()
     context = {
@@ -131,33 +148,38 @@ def list_price(request):
     return render(request, 'dashboard/price/list.html', context)
 
 
+@login_required(login_url='dashboard:log_in')
 def detail_price(request, id):
-    pricess = models.Price.objects.get(id=id)
+    prices = models.Price.objects.get(id=id)
     context = {
-        'pricess':pricess
+        'prices':prices
     }
     return render(request, 'dashboard/price/detail.html', context)
 
 
+@login_required(login_url='dashboard:log_in')
 def edit_price(request, id):
-    prices = models.Price.objects.get(id=id)
+    price = models.Price.objects.get(id=id)
     if request.method =='POST':
-        prices.title = request.POST['title']
-        prices.price = request.POST['price']
-        prices.body = request.POST['body']
-        prices.save()
-        return redirect('price-list')
+        price.title = request.POST['title']
+        price.price = request.POST['price']
+        price.body = request.POST['body']
+        price.save()
+        return redirect('dashboard:price-list')
     context = {
-        'prices':prices
+        'price':price
     }
     return render(request, 'dashboard/price/edit.html', context)
 
+
+@login_required(login_url='dashboard:log_in')
 def delete_price(request, id):
     models.Price.objects.get(id=id).delete()
-    return redirect('price-list')
+    return redirect('dashboard:price-list')
 
 
 """ About us section """
+@login_required(login_url='dashboard:log_in')
 def create_about_us(request):
     if request.method == "POST":
         body = request.POST['body']
@@ -167,6 +189,7 @@ def create_about_us(request):
     return render(request, 'dashboard/about_us/create.html')
 
 
+@login_required(login_url='dashboard:log_in')
 def list_about_us(request):
     about_us = models.AboutUs.objects.all()
     context = {
@@ -174,6 +197,7 @@ def list_about_us(request):
     }
     return render(request, 'dashboard/about_us/list.html', context)
 
+@login_required(login_url='dashboard:log_in')
 def detail_about_us(request, id):
     about_us = models.AboutUs.objects.get(id=id)
     context = {
@@ -182,6 +206,7 @@ def detail_about_us(request, id):
     return render(request, 'dashboard/about_us/detail.html', context)
 
 
+@login_required(login_url='dashboard:log_in')
 def edit_about_us(request, id):
     about_us = models.AboutUs.objects.get(id=id)
     if request.method =='POST':
@@ -193,13 +218,14 @@ def edit_about_us(request, id):
     }
     return render(request, 'dashboard/about_us/edit.html', context)
 
+@login_required(login_url='dashboard:log_in')
 def delete_about_us(request, id):
     models.AboutUs.objects.get(id=id).delete()
-    return redirect('about_us-list')
+    return redirect('dashboard:about_us-list')
 
 
 """ Contact section """
-
+@login_required(login_url='dashboard:log_in')
 def list_contact(request):   
     contacts = models.Contact.objects.all()
     context = {
@@ -207,6 +233,8 @@ def list_contact(request):
     }
     return render(request, 'dashboard/contact/list.html', context)
 
+
+@login_required(login_url='dashboard:log_in')
 def detail_contact(request, id):
     contacts = models.Contact.objects.get(id=id) 
     context = {
@@ -214,15 +242,48 @@ def detail_contact(request, id):
     }
     return render(request, 'dashboard/contact/detail.html', context)
 
+@login_required(login_url='dashboard:log_in')
 def edit_contact(request, id):
-    contacts = models.Contact.objects.get(id=id)
+    contact = models.Contact.objects.get(id=id)
     if request.method == "POST":
-        contacts.is_show = request.POST['is_show']
-        contacts.save()
-        return redirect('contact-list',contacts.id)
+        is_show = request.POST.get('is_show')  
+        contact.is_show = is_show == 'on'
+        contact.save()
+        return redirect('dashboard:contact-list')
     context = {
-        'contacts':contacts,
+        'contact': contact, 
     }
     return render(request, 'dashboard/contact/edit.html', context)
 
 
+""" Register, login, logout """
+def register(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        password_confirm = request.POST['password_confirm']
+        if password == password_confirm:
+            User.objects.create_user(
+                username=username,
+                password=password
+            )
+    return render(request, 'dashboard/auth/register.html')
+
+
+def log_in(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('dashboard:index')
+        else:
+            return render(request, 'dashboard/auth/login.html', {'error_message': 'Invalid username or password.'})
+    else:
+        return render(request, 'dashboard/auth/login.html')
+
+
+def log_out(request):
+    logout(request)
+    return redirect('main:index')

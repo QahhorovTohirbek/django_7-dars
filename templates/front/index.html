@@ -51,20 +51,18 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav  ml-auto">
               <li class="nav-item active">
-                <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{% url 'main:index' %}">Home <span class="sr-only">(current)</span></a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="about.html"> About</a>
+                <a class="nav-link" href="{% url 'main:about_us' %}"> About</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="service.html">Services</a>
+                <a class="nav-link" href="fr{% url 'main:service' %}">Services</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="price.html">Pricing</a>
+                <a class="nav-link" href="{% url 'main:price' %}">Pricing</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'contact' %}">Contact Us</a>
-              </li>
             </ul>
           </div>
         </nav>
@@ -86,11 +84,11 @@
                     <p>
                       {{baner.body}}</p>
                     <div class="btn-box">
-                      <a href="" class="btn-1">
-                        Read More
+                      <a href="{% url 'dashboard:register' %}" class="btn-1">
+                        Register
                       </a>
-                      <a href="" class="btn-2">
-                        Contact Us
+                      <a href="{% url 'dashboard:log_in' %}" class="btn-1">
+                        Login
                       </a>
                     </div>
                   </div>
@@ -268,7 +266,7 @@
       <div class="row">
         <div class="col-md-8 col-lg-6 mx-auto">
           <div class="form_container">
-            <form method="post" action="{% url 'contact' %}">
+            <form method="post" action="{% url 'main:contact' %}">
                 {% csrf_token %}
               <div>
                 <input type="text" placeholder="Your Name" name="name" />

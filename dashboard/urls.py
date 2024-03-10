@@ -1,12 +1,14 @@
 from django.urls import path
 from . import views
 
+app_name = 'dashboard'
+
 urlpatterns = [
-    path('', views.index),
+    path('', views.index, name='index'),
 
     # banner
     path('banner-list/', views.list_banner, name='banner-list'),
-    path('banner-create/', views.create_banner, name='banner-ceate'),
+    path('banner-create/', views.create_banner, name='banner-create'),
     path('banner-detail/<int:id>/', views.detail_banner, name='banner-detail'),
     path('banner-edit/<int:id>/', views.edit_banner, name='banner-edit'),
     path('banner-delete/<int:id>/', views.delete_banner, name='banner-delete'),
@@ -36,5 +38,11 @@ urlpatterns = [
     path('contact-list/', views.list_contact, name='contact-list'),
     path ('contact-detail/<int:id>/', views.detail_contact, name='contact-detail'),
     path('contact-edit/<int:id>/', views.edit_contact, name='contact-edit'),
+
+    # Register login
+
+    path('register/', views.register, name='register'),
+    path('log-in/', views.log_in, name='log_in'),
+    path('log-out/', views.log_out, name='log_out'),
     
 ]
