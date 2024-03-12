@@ -50,10 +50,14 @@ def about_us(request):
     return render(request, 'front/about.html', context)
 
 def price(request):
-    prices=models.Price.objects.all().order_by('price')
+    prices_list = []
+
+    for price in models.Price.objects.all().order_by('price'):
+        price.body = price.body.split(',')
+        prices_list.append(price)
 
     context = {
-        'prices':prices,
+        'prices':prices_list,
     }
     return render(request, 'front/price.html', context)
 

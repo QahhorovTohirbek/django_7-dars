@@ -155,9 +155,9 @@
                 <div class="h-100" id="leftside-menu-container" data-simplebar>
                     <!-- Leftbar User -->
                     <div class="leftbar-user">
-                        <a href="pages-profile.html">
+                        <a href="{% url 'dashboard:index' %}">
                             <img src="{% static 'dashboard/images/users/avatar-1.jpg' %}" alt="user-image" height="42" class="rounded-circle shadow-sm">
-                            <span class="leftbar-user-name mt-2">Dominic Keller</span>
+                            <span class="leftbar-user-name mt-2">{{user.username}}</span>
                         </a>
                     </div>
 
@@ -165,6 +165,13 @@
                     <ul class="side-nav">
 
                         <li class="side-nav-title">Navigation</li>
+
+                        <li class="side-nav-item">
+                            <a href="{% url 'dashboard:index'%}" class="side-nav-link">
+                                <i class="uil uil-home-alt icon"></i>
+                                <span> Bosh sahifa </span>
+                            </a>
+                        </li>
 
                         <li class="side-nav-item">
                             <a data-bs-toggle="collapse" href="#sidebarDashboards" aria-expanded="false" aria-controls="sidebarDashboards" class="side-nav-link">
