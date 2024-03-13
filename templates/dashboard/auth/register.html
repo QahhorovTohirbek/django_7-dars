@@ -24,7 +24,7 @@
         #auth-img{
             background-repeat:no-repeat;
             background-size: cover;
-            background-image: url({% static 'dashboard/images/unsplash.jpeg' %});
+            background-image: url({% static 'dashboard/images/host.jpg' %});
         }
     </style>
 </head>
@@ -45,6 +45,19 @@
                         <span><img src="{% static 'dashboard/images/logo.png' %}" alt="logo" height="22"></span>
                     </a>
                 </div>
+                        {% for message in messages %}
+                        {% if message.tags == 'success' %}
+                        <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show" role="alert" id='message_container'>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+                            <strong>{{message}}</strong>
+                        </div>  
+                        {% elif message.tags == 'error' %}  
+                        <div class="alert alert-primary alert-dismissible bg-danger text-white border-0 fade show" role="alert" id='message_container'>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+                            <strong>{{message}}</strong>
+                        </div> 
+                        {% endif %}
+                        {% endfor %}
 
                 <div class="my-auto">
                     <!-- title-->
@@ -125,6 +138,15 @@
 
     <!-- App js -->
     <script src="{% static 'dashboard/js/app.min.js' %}"></script>
+
+    <script>
+        let message_ele = document.getElementById('message_container');
+
+        setTimeout(function(){
+            message_ele.style.display = 'none';
+        }, 2500);
+
+    </script>
 
 </body>
 

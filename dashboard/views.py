@@ -3,28 +3,34 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from main import models
+from django.contrib import messages
+
 
 
 @login_required(login_url='dashboard:log_in')
 def index(request):
     contacts = models.Contact.objects.filter(is_show=False).count()
+    users = User.objects.count()
+    services = models.Service.objects.all().count()
 
     context = {
-        'contacts':contacts
+        'contacts':contacts,
+        'users':users,
+        'services':services,
     }
     return render(request, 'dashboard/index.html', context)
 
+@login_required(login_url="dashboard:log_in")
+def users_list(request):
+    users = User.objects.all()
+    context = {
+        'users':users,
+    }
+    return render(request, 'dashboard/users_list.html', context)
 
-# CRUD 
-
-# Create
-# Read -> List/Detail
-# Update
-# Delte
-
-""" Banner section """
 @login_required(login_url='dashboard:log_in')
 def create_banner(request):
+    """ Banner section """
     if request.method == "POST":
         title = request.POST['title']
         body = request.POST['body']
@@ -32,6 +38,7 @@ def create_banner(request):
             title=title,
             body=body,
         )
+        messages.success(request, 'Banner muvoffaqiyatli yaratildi')
     return render(request, 'dashboard/banner/create.html')
 
 
@@ -58,6 +65,7 @@ def edit_banner(request, id):
         banner.title = request.POST['title']
         banner.body = request.POST['body']
         banner.save()
+        messages.success(request, 'Banner muvoffaqiyatli yangilandi')
         return redirect('dashboard:banner-detail', banner.id)
     context = {
         'banner':banner
@@ -66,13 +74,14 @@ def edit_banner(request, id):
 
 def delete_banner(request, id):
     models.Banner.objects.get(id=id).delete()
-    return redirect('banner-list')
+    messages.success(request, 'Banner muvoffaqiyatli o`chirildi')
+    return redirect('dashboard:banner-list')
 
 
 
-""" Service section """
 @login_required(login_url='dashboard:log_in')
 def create_service(request):
+    """ Service section """
     if request.method == "POST":
         name = request.POST['name']
         body = request.POST['body']
@@ -82,6 +91,7 @@ def create_service(request):
             body=body,
             icon=icon
         )
+        messages.success(request, 'Service muvoffaqiyatli qo`shildi')
     return render(request, 'dashboard/service/create.html')
 
 
@@ -111,7 +121,8 @@ def edit_service(request, id):
         service.body = request.POST['body']
         service.icon = request.POST['icon']
         service.save()
-        return redirect('dashboard:service-list', service.id)
+        messages.success(request, 'Service muvoffaqiyatli tahrirlandi')
+        return redirect('dashboard:service-list')
     context = {
         'service':service
     }
@@ -121,12 +132,13 @@ def edit_service(request, id):
 @login_required(login_url='dashboard:log_in')
 def delete_service(request, id):
     models.Service.objects.get(id=id).delete()
+    messages.success(request, 'Service muvoffaqiyatli o`chirildi')
     return redirect('dashboard:service-list')
 
 
-""" Price section """
 @login_required(login_url='dashboard:log_in')
 def create_price(request):
+    """ Price section """
     if request.method == "POST":
         title = request.POST['title']
         price = request.POST['price']
@@ -136,6 +148,7 @@ def create_price(request):
             price=price,
             body=body
         )
+        messages.success(request, 'Price muvoffaqiyatli qo`shildi')
     return render(request, 'dashboard/price/create.html')
 
 
@@ -165,6 +178,7 @@ def edit_price(request, id):
         price.price = request.POST['price']
         price.body = request.POST['body']
         price.save()
+        messages.success(request, 'Price muvoffaqiyatli tahrirlandi')
         return redirect('dashboard:price-list')
     context = {
         'price':price
@@ -175,17 +189,19 @@ def edit_price(request, id):
 @login_required(login_url='dashboard:log_in')
 def delete_price(request, id):
     models.Price.objects.get(id=id).delete()
+    messages.success(request, 'Price muvoffaqiyatli o`chirildi')
     return redirect('dashboard:price-list')
 
 
-""" About us section """
 @login_required(login_url='dashboard:log_in')
 def create_about_us(request):
+    """ About us section """
     if request.method == "POST":
         body = request.POST['body']
         models.AboutUs.objects.create(
             body=body
         )
+        messages.success(request, 'About us muvoffaqiyatli yaratildi')
     return render(request, 'dashboard/about_us/create.html')
 
 
@@ -212,6 +228,7 @@ def edit_about_us(request, id):
     if request.method =='POST':
         about_us.body = request.POST['body']
         about_us.save()
+        messages.success(request, 'About us muvoffaqiyatli tahrirlandi')
         return redirect('about_us-list')
     context = {
         'about_us':about_us
@@ -221,6 +238,7 @@ def edit_about_us(request, id):
 @login_required(login_url='dashboard:log_in')
 def delete_about_us(request, id):
     models.AboutUs.objects.get(id=id).delete()
+    messages.success(request, 'About us muvoffaqiyatli o`chirildi')
     return redirect('dashboard:about_us-list')
 
 
@@ -228,6 +246,7 @@ def delete_about_us(request, id):
 @login_required(login_url='dashboard:log_in')
 def list_contact(request):   
     contacts = models.Contact.objects.all()
+    messages.success(request, 'Xabarni ko`rib chiqdingiz')
     context = {
         'contacts':contacts
     }
@@ -249,6 +268,7 @@ def edit_contact(request, id):
         is_show = request.POST.get('is_show')  
         contact.is_show = is_show == 'on'
         contact.save()
+        messages.success(request, 'Xabarni ko`rib chiqdingiz')
         return redirect('dashboard:contact-list')
     context = {
         'contact': contact, 
@@ -267,6 +287,13 @@ def register(request):
                 username=username,
                 password=password
             )
+            messages.success(request, 'Muvoffaqiyatli ro`yxatdan o`tdingiz')
+            return redirect('dashboard:log_in')
+        elif password != password_confirm:
+            messages.error(request, 'Parol bir xil emas')
+        elif User.objects.filter(username=username).exists():
+            messages.error(request, 'Bunday foydalanuvchi mavjud')
+            return redirect('dashboard:register')
     return render(request, 'dashboard/auth/register.html')
 
 
@@ -277,13 +304,32 @@ def log_in(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
+            messages.success(request, 'Xush kelibsiz')
             return redirect('dashboard:index')
+            
         else:
-            return render(request, 'dashboard/auth/login.html', {'error_message': 'Invalid username or password.'})
+            messages.error(request, 'Username yoki parol noto`g`ri')
+            return render(request, 'dashboard/auth/login.html')
     else:
+        messages.error(request, 'Username yoki parol noto`g`ri')
         return render(request, 'dashboard/auth/login.html')
 
 
 def log_out(request):
     logout(request)
     return redirect('main:index')
+
+
+def query(request):
+    q = request.GET.get('q')
+    banners = models.Banner.objects.filter(title__icontains=q)
+    services = models.Service.objects.filter(title__icontains=q)
+    prices = models.Price.objects.filter(title__icontains=q)
+    contact = models.Contact.objects.filter(title__icontains=q)
+    context = {
+        'banners': banners,
+        'services': services,
+        'prices': prices,
+        'contact': contact
+    }
+    return render(request, 'dashboard/query.html', context)

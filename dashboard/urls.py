@@ -5,6 +5,7 @@ app_name = 'dashboard'
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('users/', views.users_list, name='users'),
 
     # banner
     path('banner-list/', views.list_banner, name='banner-list'),
@@ -44,5 +45,4 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('log-in/', views.log_in, name='log_in'),
     path('log-out/', views.log_out, name='log_out'),
-    
 ]
